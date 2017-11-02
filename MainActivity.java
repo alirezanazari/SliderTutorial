@@ -4,27 +4,17 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.koushikdutta.async.future.Future;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.ProgressCallback;
 
-import java.io.File;
+
 
 public class MainActivity extends AppCompatActivity  implements BaseSliderView.OnSliderClickListener{
 
-    SeekBar seekBar ;
-    Button btn_dl ;
-    String filePath ;
-    Future<File> downloading ;
-
+  
     SliderLayout slider ;
     String [] img = {
 
@@ -40,7 +30,7 @@ public class MainActivity extends AppCompatActivity  implements BaseSliderView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //dlVoid();
+        
         sliderConfig();
 
 
@@ -74,51 +64,6 @@ public class MainActivity extends AppCompatActivity  implements BaseSliderView.O
     }
 
 
-    private void dlVoid(){
-
-//        seekBar  = (SeekBar) findViewById(R.id.seekbar);
-//        btn_dl   = (Button)  findViewById(R.id.btn_dl);
-
-        filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/1app/";
-
-
-        btn_dl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (downloading != null && !downloading.isCancelled()) {
-                    downloading.cancel();
-                    downloading = null;
-                    return;
-                }
-
-                downloading = Ion.with(getBaseContext())
-                        .load("http://static2.varzesh3.com/files/picture/01249175.png")
-                        .progressHandler(new ProgressCallback() {
-
-                            @Override
-                            public void onProgress(long downloaded, long total) {
-
-                                seekBar.setMax((int) total);
-                                seekBar.setProgress((int) downloaded);
-                            }
-                        })
-                        .write(new File(filePath + "111.png"))
-                        .setCallback(new FutureCallback<File>() {
-                            @Override
-                            public void onCompleted(Exception e, File file) {
-
-                                if (e == null){
-                                    Toast.makeText(getApplicationContext() , "File Downloaded" , Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(getApplicationContext() , "Failed to Download" , Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-            }
-        });
-    }
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
