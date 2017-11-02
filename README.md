@@ -3,6 +3,8 @@ source of building slider for android application with java library
 
 # Aparat link
 
+https://www.aparat.com/v/pIqQ5
+
 
 # library dependency 
 
